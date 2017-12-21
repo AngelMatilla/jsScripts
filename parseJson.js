@@ -11,7 +11,7 @@ process.argv.slice(2).forEach(function (fileName) {
         //do something with the json model
         addConfigToAllPersons(obj);
 
-        var myJSON = JSON.stringify(obj, null, "\t");
+        var myJSON = JSON.stringify(obj, null, 2);
         fs.writeFileSync(fileNameOut, myJSON, 'utf8');
         console.log(fileNameOut + " has been generated");
 });
@@ -22,9 +22,9 @@ function addConfigToAllPersons(jsonObj) {
     for (var key in jsonObj.persons)
     {
       for (var key2 in jsonObj.persons[key].groups){
-        console.log(jsonObj.persons[key].groups[key2].billingAccount);
+        //console.log(jsonObj.persons[key].groups[key2].billingAccount);
         jsonObj.persons[key].groups[key2].config = "gl_mataro";
-        console.log(jsonObj.persons[key].groups[key2].config);
+        //console.log(jsonObj.persons[key].groups[key2].config);
       }
     }
     return jsonObj;
