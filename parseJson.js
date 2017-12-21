@@ -19,13 +19,52 @@ process.argv.slice(2).forEach(function (fileName) {
 // add a config to each person using json parser in js
 function addConfigToAllPersons(jsonObj) {
     //jsonObj.cars.car001.name = "hello";
+    var token = 0;
     for (var key in jsonObj.persons)
     {
       for (var key2 in jsonObj.persons[key].groups){
         //console.log(jsonObj.persons[key].groups[key2].billingAccount);
-        jsonObj.persons[key].groups[key2].config = "gl_mataro";
-        //console.log(jsonObj.persons[key].groups[key2].config);
+        switch (key2){
+          case "sommobilitat":
+            if (token == 0){
+                token = 1;
+                jsonObj.persons[key].groups[key2].config = "gl_mataro";
+            }
+            break;
+          case "gl_amposta":
+            if (token == 0){
+              token = 1;
+              var new_element = {config:"gl_amposta", billingAccount:"sommobilitat"};
+              jsonObj.persons[key].groups["sommobilitat"] = new_element;
+            }
+            delete jsonObj.persons[key].groups[key2];
+            break;
+          case "gl_bruc":
+            if (token == 0){
+              token = 1;
+              var new_element = {config:"gl_bruc", billingAccount:"sommobilitat"};
+              jsonObj.persons[key].groups["sommobilitat"] = new_element;
+            }
+            delete jsonObj.persons[key].groups[key2];
+            break;
+          case "gl_olot":
+            if (token == 0){
+              token = 1;
+              var new_element = {config:"gl_olot", billingAccount:"sommobilitat"};
+              console.log(jsonObj.persons[key].firstname);
+              console.log(new_element);
+              jsonObj.persons[key].groups["sommobilitat"] = new_element;
+              console.log(jsonObj.persons[key].groups["sommobilitat"]);
+            }
+            delete jsonObj.persons[key].groups[key2];
+            break;
+          default:
+            console.log(jsonObj.persons[key].firstname);
+            console.log("this case should not exist");
+            break;
+        }
       }
+      token = 0;
     }
     return jsonObj;
 }
